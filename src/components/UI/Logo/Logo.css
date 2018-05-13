@@ -1,0 +1,21 @@
+.Logo {
+	height: 42px;
+	position: relative;
+	width: 200px;
+}
+
+.Logo:after {
+	background: rgba(0,0,0,0.05);
+	bottom: 0;
+	content: '';
+	display: block;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.Logo > img {
+	display: block;
+	width: 100%;
+}
