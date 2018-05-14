@@ -1,10 +1,16 @@
 .Logo {
-	height: 42px;
+	float: left;
 	position: relative;
+}
+
+.Logo > a {
+	cursor: pointer;
+	display: block;
+	height: 42px;
 	width: 200px;
 }
 
-.Logo:after {
+.Logo > a:after {
 	background: rgba(0,0,0,0.05);
 	bottom: 0;
 	content: '';
@@ -15,7 +21,7 @@
 	top: 0;
 }
 
-.Logo > img {
+.Logo > a > img {
 	display: block;
 	width: 100%;
 }

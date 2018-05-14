@@ -1,0 +1,18 @@
+.Nav {
+	float: right;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.Nav > li {
+	display: inline;
+}
+
+.Nav > li > a {
+	color: #f05;
+	display: inline-block;
+	margin: 15px 10px;
+	padding: 5px 10px;
+	text-decoration: none;
+}

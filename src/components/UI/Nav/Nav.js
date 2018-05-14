@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Nav = (props) => {
+import './Nav.css';
+
+const Nav = () => {
 	return (
 		<ul className='Nav'>
-			<li onClick={props.onClickHandler('conferences')}>Конференцы</li>
-			<li>Отделы</li>
+			<li><Link to='/admin/halls'>Конференцы</Link></li>
+			<li><Link to='/admin/departments'>Отделы</Link></li>
 		</ul>
 	);
 };
