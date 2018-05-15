@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import '../../components/UI/common.css';
 import './Departments.css';
 
 class Departments extends Component {
