@@ -1,10 +1,16 @@
 .Hall {
-    background: #ff9d00;
-    border-top: 1px solid #fff;
-    color: #fff;
+    border: 1px solid #930049;
+	border-radius: 4px;
+    color: #930049;
     cursor: pointer;
     display: block;
+	margin: 5px 0;
     max-width: 300px;
     padding: 5px 15px;
     text-align: center;
+}
+
+.Hall:hover {
+	border-color: #b20058;
+	color: #930049;
 }
