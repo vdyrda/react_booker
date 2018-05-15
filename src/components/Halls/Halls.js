@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import Hall from './Hall/Hall';
 
 import './Halls.css';
 
-const halls = () => {
-	const halls = [
-		{name: 'Конференц 1'},
-		{name: 'Конференц 2'}
-	];
+class Halls extends Component {
+	state = {
+		activeId : null,
+		halls : [
+			{id: 1, name: 'Конференц 1'},
+			{id: 2, name: 'Конференц 2'}
+		]
+	};
 
-	return (
-		<div className='Halls'>
-			<Hall name={halls[0].name} />
-            <Hall name={halls[1].name} />
-		</div>
-	);
-};
+	onHallClickHandler = (event) => {
+		this.setState({ activeId: +event.target.id });
+	};
 
-export default halls;
+	render () {
+		const halls = this.state.halls.map( hall => {
+			const className = (hall.id === this.state.activeId) ? ' -active' : '';
+			return <Hall className={className} key={hall.id} id={hall.id} name={hall.name} onHallClicked={this.onHallClickHandler} />
+		});
+
+		return (
+			<div className='Halls'>
+				{halls}
+			</div>
+		);
+	}
+}
+
+export default Halls;
