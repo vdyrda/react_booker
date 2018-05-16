@@ -10,9 +10,32 @@
 }
 
 .Nav > li > a {
-	color: #930049;
+	color: #111;
 	display: inline-block;
 	margin: 15px 10px;
-	padding: 5px 10px;
+	padding: 5px 0;
+	position: relative;
 	text-decoration: none;
+	overflow: hidden;
+}
+
+.Nav > li > a:after {
+	background: #930049;
+	content: '';
+	display: block;
+	height: 2px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	transition: all 0.5s;
+	transform: translateX(100%);
+	width: 100%;
+}
+
+.Nav > li > a:hover {
+	color: #930049;
+}
+
+.Nav > li > a:hover:after {
+	transform: translateX(0);
 }

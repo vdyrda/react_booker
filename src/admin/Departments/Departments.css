@@ -4,16 +4,22 @@
 	padding: 0;
 }
 
-.Dept {
-	margin: 10px 0;
-}
-
-.Dept > .name {
+.Depts-actions > .btn {
 	display: inline-block;
-	font-weight: 700;
-	margin-right: 10px;
 }
 
-.Dept > .actions > button {
+.Dept-name {
+	font-weight: 700;
+	min-width: 10em;
+	padding-bottom: 15px;
+	padding-right: 15px;
+}
+
+.Depts-actions {
+	margin: 0.5rem 0;
+	padding-bottom: 15px;
+}
+
+.Dept-actions > button {
 	margin: 0 8px;
 }

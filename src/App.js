@@ -20,10 +20,10 @@ class App extends Component {
 				<div className="App">
 					<header className="App-header">
 						<Logo />
+						<div className="App-title">КОНФЕРЕНЦ</div>
 						<Nav />
 					</header>
 					<main className="App-main">
-						<h1 className="App-title">Бронирование конференц-залов</h1>
 						<Route path='/admin/departments' render={() => <Departments />} />
 						<Route path='/admin/halls' render={() => <Halls />} />
 						<Route exact path='/' render={() => <Halls />} />
