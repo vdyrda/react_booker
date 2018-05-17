@@ -4,22 +4,26 @@ import '../../components/UI/common.css';
 import './Departments.css';
 
 class Departments extends Component {
-	state = {
-		maxId: 2, // TODO change to 0
-		depts: [
-			{id: 1, name: 'Web UI', password: ''},
-			{id: 2, name: 'Design', password: ''}
-		]
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			maxId: 2, // TODO change to 0
+			depts: [
+				{id: 1, name: 'WEB UI', password: '555'},
+				{id: 2, name: 'Designers', password: '555'}
+			]
+		};
+	}
 
 	createDept(dept = {}) {
 		if (dept.name && dept.password) {
-			const newMaxId = this.state.maxId + 1;
-			let newDepts = [...this.state.depts];
-			newDepts.push({ id: newMaxId, name: dept.name, password: dept.password });
-			this.setState({
-				maxId: newMaxId,
-				depts: newDepts
+			this.setState( (prevState, dept) => {
+				let newDepts = [...prevState.depts];
+				newDepts.push({ id: prevState.maxId + 1, name: dept.name, password: dept.password });
+				return {
+					maxId: prevState.maxId + 1,
+					depts: newDepts
+				};
 			});
 		}
 	}
