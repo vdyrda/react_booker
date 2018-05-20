@@ -9,6 +9,7 @@ input[type="password"],
 	border: 1px solid #707880;
 	border-radius: 4px;
 	color: #707880;
+	display: inline-block;
 	font-weight: 700;
 	height: 2.5rem;
 	line-height: 2.5rem;

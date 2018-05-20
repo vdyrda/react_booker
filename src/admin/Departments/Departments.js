@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import '../../components/UI/common.css';
 import './Departments.css';
+
+import DepartmentAdd from './DepartmentAdd/DepartmentAdd';
 
 class Departments extends Component {
 	constructor(props) {
@@ -13,6 +16,14 @@ class Departments extends Component {
 				{id: 2, name: 'Designers', password: '555'}
 			]
 		};
+	}
+
+	componentDidMount() {
+		axios.get('https://jsonplaceholder.typicode.com/posts')
+			.then(response => {
+				console.log(response);
+			});
+
 	}
 
 	createDept(dept = {}) {
@@ -54,12 +65,7 @@ class Departments extends Component {
 		return (
 			<div className="Depts-wrap">
 				<div className="h2">Отделы</div>
-				<div className="Depts-actions">
-					<label className="btn">Добавить новый</label>
-					<input placeholder="Название отдела" name="deptName" type="text" />
-					<input placeholder="Пароль" name="deptName" type="password" />
-					<button className="btn" onClick={this.createDept}>Сохранить</button>
-				</div>
+				<DepartmentAdd changed={this.createDept}/>
 				{Depts}
 			</div>
 		);
