@@ -1,33 +1,46 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '../../components/axios';
 
 import '../../components/UI/common.css';
 import './Departments.css';
 
-import DepartmentAdd from './DepartmentAdd/DepartmentAdd';
+import NewDepartment from './NewDepartment/NewDepartment';
 
 class Departments extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			maxId: 2, // TODO change to 0
-			depts: [
-				{id: 1, name: 'WEB UI', password: '555'},
-				{id: 2, name: 'Designers', password: '555'}
-			]
+			loading: true,
+			writing: false,
+			depts: []
 		};
 	}
 
 	componentDidMount() {
-		axios.get('https://jsonplaceholder.typicode.com/posts')
-			.then(response => {
-				console.log(response);
-			});
+		axios.get('/departments.json')
+			.then(res => {
+				const fetchedDepartments = [];
+				for (let key in res.data) {
+					fetchedDepartments.push({
+						...res.data[key],
+						id: key
+					});
 
+				}
+				this.setState({loading: false, depts: fetchedDepartments});
+			})
+			.catch(err => {
+				this.setState({loading: false});
+			});
 	}
 
 	createDept(dept = {}) {
 		if (dept.name && dept.password) {
+			//  try to write data to server
+			this.setState({writing : true});
+
+			/*axios.post()
+
 			this.setState( (prevState, dept) => {
 				let newDepts = [...prevState.depts];
 				newDepts.push({ id: prevState.maxId + 1, name: dept.name, password: dept.password });
@@ -36,6 +49,7 @@ class Departments extends React.Component {
 					depts: newDepts
 				};
 			});
+			*/
 		}
 	}
 
@@ -65,7 +79,7 @@ class Departments extends React.Component {
 		return (
 			<div className="Depts-wrap">
 				<div className="h2">Отделы</div>
-				<DepartmentAdd changed={this.createDept}/>
+				<NewDepartment createDept={this.createDept}/>
 				{Depts}
 			</div>
 		);

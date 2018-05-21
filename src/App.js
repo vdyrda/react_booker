@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import './App.css';
@@ -9,7 +9,7 @@ import Nav from './components/UI/Nav/Nav';
 import Departments from './admin/Departments/Departments';
 import Halls from './components/Halls/Halls';
 
-class App extends Component {
+class App extends React.Component {
 	navHandler(link) {
 		console.log(link);
 	}

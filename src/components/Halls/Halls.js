@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Hall from './Hall/Hall';
 
 import './Halls.css';
 
-class Halls extends Component {
+class Halls extends React.Component {
 	state = {
 		activeId : null,
 		halls : [
