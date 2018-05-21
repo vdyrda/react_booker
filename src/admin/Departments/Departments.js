@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 import '../../components/UI/common.css';
@@ -6,7 +6,7 @@ import './Departments.css';
 
 import DepartmentAdd from './DepartmentAdd/DepartmentAdd';
 
-class Departments extends Component {
+class Departments extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {

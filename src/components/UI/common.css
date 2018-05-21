@@ -15,7 +15,7 @@ input[type="password"],
 	line-height: 2.5rem;
 	margin: 5px 0;
 	padding: 0 15px;
-	transform: all 0.3s ease;
+	transform: all 0.1s ease;
 }
 
 .btn {
@@ -27,7 +27,7 @@ input[type="password"],
 .input[type="password"]:focus,
 .btn:hover {
 	border-color: #930049;
-	box-shadow: 0 0 20px rgba(0,0,0,0.3) inset;
+	box-shadow: 0 0 8px rgba(0,0,0,0.3) inset;
 	color: #930049;
 }
 
