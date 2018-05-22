@@ -36,22 +36,19 @@ class Departments extends React.Component {
 			});
 	}
 
-	createDept(dept = {}) {
-		if (dept.name && dept.password) {
+	createDept(dept) {
+		if (dept.get('name') && dept.get('password')) {
 			//  try to write data to server
 			this.setState({writing : true});
-
-			/*axios.post()
-
-			this.setState( (prevState, dept) => {
-				let newDepts = [...prevState.depts];
-				newDepts.push({ id: prevState.maxId + 1, name: dept.name, password: dept.password });
-				return {
-					maxId: prevState.maxId + 1,
-					depts: newDepts
-				};
-			});
-			*/
+			axios.post('/departments', dept.toJS())
+				.then(response => {
+					let depts = [...this.state.depts];
+					depts.push({name: dept.name, password: dept.password, id: +Date()});
+					this.setState({depts: depts});
+				})
+				.catch(error => {
+					this.setState({ error: true, errorData: error});
+				});
 		}
 	}
 
@@ -85,7 +82,7 @@ class Departments extends React.Component {
 		return (
 			<div className="Depts-wrap">
 				<h2>Отделы</h2>
-				<NewDepartment createDept={this.createDept}/>
+				<NewDepartment createDept={(dept) => this.createDept(dept)}/>
 				{Depts}
 			</div>
 		);

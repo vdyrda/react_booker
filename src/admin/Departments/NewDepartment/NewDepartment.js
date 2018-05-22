@@ -1,4 +1,5 @@
 import React from 'react';
+import { Map } from 'immutable';
 
 import './NewDepartment.css';
 
@@ -7,33 +8,32 @@ class NewDepartment extends React.Component {
 		super(props);
 		this.state = {
 			showForm: false,
-			value: []
+			dept: Map({name: null, password: null})
 		};
 	}
 
 	addButtonToggle() {
-		const showForm_new = !this.state.showForm;
-		this.setState({ showForm: showForm_new });
+		const showForm = !this.state.showForm;
+		this.setState({showForm: showForm});
 	}
 
-	onChanged(event, key) {
-		let newField = {};
-		newField[key] = event.target.value;
-		this.setState({value: newField});
-		console.log(this.state);
+	onChanged(event) {
+		const dept = this.state.dept.set(event.target.name, event.target.value);
+		this.setState({dept});
+		//console.log('name = '+this.state.dept.get('name')+', password = '+this.state.dept.get('password'));
 	}
 
 	render() {
 		const content = this.state.showForm ? (
 			<div className="form-row">
 				<div className="col-2">
-					<input className="form-control" placeholder="Название отдела" name="name" type="text" onChange={(event) => this.onChanged(event, 'name')} />
+					<input tabIndex="1" className="form-control" placeholder="Название отдела" name="name" type="text" onChange={event => this.onChanged(event)} />
 				</div>
 				<div className="col-2">
-					<input className="form-control" placeholder="Пароль" name="pass" type="password" onChange={(event) => this.onChanged(event, 'password')} />
+					<input tabIndex="2" className="form-control" placeholder="Пароль" name="password" type="password" onChange={event => this.onChanged(event)} />
 				</div>
 				<div className="col-2">
-					<button className="btn btn-primary" onClick={() => this.props.createDept()}>Сохранить</button>
+					<button tabIndex="3" className="btn btn-primary" onClick={() => this.props.createDept(this.state.dept)}>Сохранить</button>
 				</div>
 			</div>
 			) : (
