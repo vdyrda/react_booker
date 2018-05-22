@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './NewDepartment.css';
+
 class NewDepartment extends React.Component {
 	constructor(props) {
 		super(props);
@@ -23,17 +25,23 @@ class NewDepartment extends React.Component {
 
 	render() {
 		const content = this.state.showForm ? (
-			<div className="addForm">
-				<input placeholder="Название отдела" name="name" type="text" onChange={(event) => this.onChanged(event, 'name')} />
-				<input placeholder="Пароль" name="pass" type="password" onChange={(event) => this.onChanged(event, 'password')} />
-				<button className="btn" onClick={() => this.props.createDept()}>Сохранить</button>
+			<div className="form-row">
+				<div className="col-2">
+					<input className="form-control" placeholder="Название отдела" name="name" type="text" onChange={(event) => this.onChanged(event, 'name')} />
+				</div>
+				<div className="col-2">
+					<input className="form-control" placeholder="Пароль" name="pass" type="password" onChange={(event) => this.onChanged(event, 'password')} />
+				</div>
+				<div className="col-2">
+					<button className="btn btn-primary" onClick={() => this.props.createDept()}>Сохранить</button>
+				</div>
 			</div>
 			) : (
-				<button onClick={() => this.addButtonToggle()} className="btn">Добавить новый</button>
+				<button className="btn btn-primary" onClick={() => this.addButtonToggle()}>Добавить новый</button>
 			);
 
 		return (
-			<div className='DepartmentAdd'>
+			<div className='NewDepartment'>
 				{content}
 			</div>
 		);

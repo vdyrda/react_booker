@@ -2,6 +2,19 @@
 	font-size: 1.5rem;
 	font-weight: 700;
 }
+/*
+.table {
+	display: table;
+}
+
+.tr {
+	display: table-row;
+}
+
+.td {
+	display: table-cell;
+}
+
 input[type="text"],
 input[type="password"],
 .btn {
@@ -35,20 +48,6 @@ input[type="password"],
 	outline: none;
 }
 
-.table {
-	display: table;
-}
-
-.tr {
-	display: table-row;
-}
-
-.td {
-	display: table-cell;
-}
-
-
-
 input[type="text"],
 input[type="password"] {
 	background: #fff;
@@ -64,3 +63,4 @@ input[type="password"] {
 	text-align: center;
 	transform: all 0.3s ease;
 }
+*/

@@ -21,11 +21,13 @@ class Departments extends React.Component {
 			.then(res => {
 				const fetchedDepartments = [];
 				for (let key in res.data) {
-					fetchedDepartments.push({
-						...res.data[key],
-						id: key
-					});
-
+					const newDept = res.data[key];
+					if (newDept) {
+						fetchedDepartments.push({
+							...newDept,
+							id: key
+						});
+					}
 				}
 				this.setState({loading: false, depts: fetchedDepartments});
 			})
@@ -62,23 +64,27 @@ class Departments extends React.Component {
 	}
 
 	render () {
-		const Depts = (
-			<ul className="Depts">
-				{this.state.depts.map( dept => <li className="Dept tr" key={dept.id}>
-					<span className="Dept-name td">
-						{dept.name}
-					</span>
-					<span className="Dept-actions td">
-						<button className="btn" onClick={this.updateDept}>Редактировать</button>
-						<button className="btn" onClick={this.removeDept}>X</button>
-					</span>
-				</li>)}
-			</ul>
-		);
+		const Depts = this.state.depts.length ? (
+			<table className="table table-hover">
+				<tbody>
+				{this.state.depts.map( dept => (
+					<tr key={dept.id}>
+						<td>
+							{dept.name}
+						</td>
+						<td className="Dept-actions">
+							<button className="btn btn-secondary" onClick={this.updateDept}>Редактировать</button>
+							<button className="btn btn-secondary" onClick={this.removeDept}>X</button>
+						</td>
+					</tr>
+					))}
+				</tbody>
+			</table>
+		) : null;
 
 		return (
 			<div className="Depts-wrap">
-				<div className="h2">Отделы</div>
+				<h2>Отделы</h2>
 				<NewDepartment createDept={this.createDept}/>
 				{Depts}
 			</div>
