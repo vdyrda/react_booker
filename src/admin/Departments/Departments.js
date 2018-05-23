@@ -12,14 +12,14 @@ class Departments extends React.Component {
 		this.state = {
 			loading: true,
 			writing: false,
-			depts: []
+			depts: null
 		};
 	}
 
 	componentDidMount() {
 		axios.get('/departments.json')
 			.then(res => {
-				const fetchedDepartments = [];
+				const fetchedDepartments = Map(res.data);/*
 				for (let key in res.data) {
 					const newDept = res.data[key];
 					if (newDept) {
@@ -28,7 +28,7 @@ class Departments extends React.Component {
 							id: key
 						});
 					}
-				}
+				}*/
 				this.setState({loading: false, depts: fetchedDepartments});
 			})
 			.catch(err => {
@@ -40,11 +40,10 @@ class Departments extends React.Component {
 		if (dept.get('name') && dept.get('password')) {
 			//  try to write data to server
 			this.setState({writing : true});
-			axios.post('/departments', dept.toJS())
+			axios.post('/departments.json', dept.toJS())
 				.then(response => {
-					let depts = [...this.state.depts];
-					depts.push({name: dept.name, password: dept.password, id: +Date()});
-					this.setState({depts: depts});
+					const deptsUpdated = this.state.depts.merge(dept);
+					this.setState({depts: deptsUpdated});
 				})
 				.catch(error => {
 					this.setState({ error: true, errorData: error});
@@ -56,12 +55,16 @@ class Departments extends React.Component {
 
 	}
 
-	removeDept(event) {
-
+	removeDept(id, deptName) {
+		// TODO: Сделать свой <Confirm>
+		//if (confirm('Будет удалён отдел: ' + deptName + '. Подтверждаете?')) {
+			const deptsUpdated = this.state.depts.delete(id);
+			this.setState(deptsUpdated);
+		//}
 	}
 
 	render () {
-		const Depts = this.state.depts.length ? (
+		const Depts = this.state.depts ? (
 			<table className="table table-hover">
 				<tbody>
 				{this.state.depts.map( dept => (
@@ -71,7 +74,7 @@ class Departments extends React.Component {
 						</td>
 						<td className="Dept-actions">
 							<button className="btn btn-secondary" onClick={this.updateDept}>Редактировать</button>
-							<button className="btn btn-secondary" onClick={this.removeDept}>X</button>
+							<button className="btn btn-secondary" onClick={(id, deptName) => this.removeDept(dept.id, dept.name)}>X</button>
 						</td>
 					</tr>
 					))}

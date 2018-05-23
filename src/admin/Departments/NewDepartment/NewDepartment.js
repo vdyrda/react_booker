@@ -8,7 +8,7 @@ class NewDepartment extends React.Component {
 		super(props);
 		this.state = {
 			showForm: false,
-			dept: Map({name: null, password: null})
+			dept: Map({name: null, password: null, id: Date.now()})
 		};
 	}
 
