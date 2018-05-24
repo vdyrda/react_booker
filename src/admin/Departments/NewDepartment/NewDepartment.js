@@ -18,6 +18,7 @@ class NewDepartment extends React.Component {
 	}
 
 	onChanged(event) {
+		// TODO: Добавить проверку на уникальность имени
 		const dept = this.state.dept.set(event.target.name, event.target.value);
 		this.setState({dept});
 		//console.log('name = '+this.state.dept.get('name')+', password = '+this.state.dept.get('password'));

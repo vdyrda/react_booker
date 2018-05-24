@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from '../../components/axios';
+import { Map, Seq } from 'immutable';
 
 import '../../components/UI/common.css';
 import './Departments.css';
@@ -19,17 +20,15 @@ class Departments extends React.Component {
 	componentDidMount() {
 		axios.get('/departments.json')
 			.then(res => {
-				const fetchedDepartments = Map(res.data);/*
+				this.setState({loading: false, depts: Map(res.data)});
+				/*
+				const fetchedDepartments = Map({});
 				for (let key in res.data) {
-					const newDept = res.data[key];
-					if (newDept) {
-						fetchedDepartments.push({
-							...newDept,
-							id: key
-						});
-					}
-				}*/
+					fetchedDepartments.set(res.data[key]);
+				}
+				console.log(fetchedDepartments);
 				this.setState({loading: false, depts: fetchedDepartments});
+				*/
 			})
 			.catch(err => {
 				this.setState({loading: false});
@@ -67,14 +66,14 @@ class Departments extends React.Component {
 		const Depts = this.state.depts ? (
 			<table className="table table-hover">
 				<tbody>
-				{this.state.depts.map( dept => (
-					<tr key={dept.id}>
+				{Seq(this.state.depts).map( dept => (
+					<tr key={dept.get('id')}>
 						<td>
-							{dept.name}
+							{dept.get('name')}
 						</td>
 						<td className="Dept-actions">
 							<button className="btn btn-secondary" onClick={this.updateDept}>Редактировать</button>
-							<button className="btn btn-secondary" onClick={(id, deptName) => this.removeDept(dept.id, dept.name)}>X</button>
+							<button className="btn btn-secondary" onClick={(id, deptName) => this.removeDept(dept.get('id'), dept.get('name'))}>X</button>
 						</td>
 					</tr>
 					))}
