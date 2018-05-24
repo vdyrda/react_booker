@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from '../../components/axios';
-import { Map, Seq } from 'immutable';
+import { Map } from 'immutable';
 
 import '../../components/UI/common.css';
 import './Departments.css';
@@ -13,22 +13,22 @@ class Departments extends React.Component {
 		this.state = {
 			loading: true,
 			writing: false,
-			depts: null
+			depts: Map()
 		};
 	}
 
 	componentDidMount() {
 		axios.get('/departments.json')
 			.then(res => {
-				this.setState({loading: false, depts: Map(res.data)});
-				/*
+				this.setState({loading: false});
 				const fetchedDepartments = Map({});
-				for (let key in res.data) {
-					fetchedDepartments.set(res.data[key]);
+				for (let id in res.data) {
+					fetchedDepartments.set(id, res.data[id]);
+					console.log('id = '+id+', data = ');
+					console.log(res.data[id]);
 				}
 				console.log(fetchedDepartments);
 				this.setState({loading: false, depts: fetchedDepartments});
-				*/
 			})
 			.catch(err => {
 				this.setState({loading: false});
@@ -63,13 +63,13 @@ class Departments extends React.Component {
 	}
 
 	render () {
-		const Depts = this.state.depts ? (
+		const Depts = this.state.depts.size ? (
 			<table className="table table-hover">
 				<tbody>
-				{Seq(this.state.depts).map( dept => (
-					<tr key={dept.get('id')}>
+				{Map(this.state.depts).map( dept => (
+					<tr key={dept.id}>
 						<td>
-							{dept.get('name')}
+							{dept.name}
 						</td>
 						<td className="Dept-actions">
 							<button className="btn btn-secondary" onClick={this.updateDept}>Редактировать</button>
