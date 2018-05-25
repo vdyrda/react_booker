@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from '../../components/axios';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 import '../../components/UI/common.css';
 import './Departments.css';
@@ -21,13 +21,15 @@ class Departments extends React.Component {
 		axios.get('/departments.json')
 			.then(res => {
 				this.setState({loading: false});
+				/*
 				const fetchedDepartments = Map({});
 				for (let id in res.data) {
 					fetchedDepartments.set(id, res.data[id]);
 					console.log('id = '+id+', data = ');
 					console.log(res.data[id]);
 				}
-				console.log(fetchedDepartments);
+				*/
+				const fetchedDepartments = fromJS(res.data);
 				this.setState({loading: false, depts: fetchedDepartments});
 			})
 			.catch(err => {
@@ -63,20 +65,20 @@ class Departments extends React.Component {
 	}
 
 	render () {
+		const tbody = this.state.depts.isMap() ? this.state.depts.map( (dept, id) => <tr id={id}>
+			<td>
+				{dept.get('name')}
+			</td>
+			<td className="Dept-actions">
+				<button className="btn btn-secondary" onClick={this.updateDept}>Редактировать</button>
+				<button className="btn btn-secondary" onClick={(id, deptName) => this.removeDept(id, dept.get('name'))}>X</button>
+			</td>
+		</tr>) : null;
+
 		const Depts = this.state.depts.size ? (
 			<table className="table table-hover">
 				<tbody>
-				{Map(this.state.depts).map( dept => (
-					<tr key={dept.id}>
-						<td>
-							{dept.name}
-						</td>
-						<td className="Dept-actions">
-							<button className="btn btn-secondary" onClick={this.updateDept}>Редактировать</button>
-							<button className="btn btn-secondary" onClick={(id, deptName) => this.removeDept(dept.get('id'), dept.get('name'))}>X</button>
-						</td>
-					</tr>
-					))}
+				{tbody}
 				</tbody>
 			</table>
 		) : null;
