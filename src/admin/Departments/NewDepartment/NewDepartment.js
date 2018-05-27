@@ -1,5 +1,4 @@
 import React from 'react';
-import { Map } from 'immutable';
 
 import './NewDepartment.css';
 
@@ -8,42 +7,72 @@ class NewDepartment extends React.Component {
 		super(props);
 		this.state = {
 			showForm: false,
-			dept: Map({name: null, password: null, id: Date.now()})
+			error: null,
+			deptName: null,
+			deptPassword: null
 		};
+		this.firstElement = React.createRef(); // React 16.3 новое Context API
 	}
 
-	addButtonToggle() {
-		const showForm = !this.state.showForm;
-		this.setState({showForm: showForm});
+	componentDidMount() {
+		// TODO: Добиться чтобы фокус заработал
+		//this.inputElement.current.focus();
 	}
 
-	onChanged(event) {
-		// TODO: Добавить проверку на уникальность имени
-		const dept = this.state.dept.set(event.target.name, event.target.value);
-		this.setState({dept});
-		//console.log('name = '+this.state.dept.get('name')+', password = '+this.state.dept.get('password'));
-	}
+	addButtonToggle = () => {
+		this.setState({showForm: !this.state.showForm});
+	};
+
+	onChanged = (event) => {
+		const newState = {[event.target.name]: event.target.value};
+		this.setState(newState);
+
+		if (this.state.error) {
+			// Удаляю сообщение об ошибке после его показа
+			this.setState({error: null});
+		}
+	};
+
+	onSave = () => {
+		if (this.state.deptName && this.state.deptPassword) {
+			// Валидно
+			this.props.onSave(this.state.deptName, this.state.deptPassword);
+			this.addButtonToggle();
+		} else {
+			// Валидация не прошла
+			this.setState({error: 'Имя и пароль обязательны к заполнению'});
+		}
+	};
 
 	render() {
 		const content = this.state.showForm ? (
-			<div className="form-row">
+			<div className="form-row form-group">
 				<div className="col-2">
-					<input tabIndex="1" className="form-control" placeholder="Название отдела" name="name" type="text" onChange={event => this.onChanged(event)} />
+					<input
+						ref={this.firstElement}
+						className="form-control"
+						placeholder="Название отдела"
+						name="deptName"
+						type="text"
+						onChange={this.onChanged} />
 				</div>
 				<div className="col-2">
-					<input tabIndex="2" className="form-control" placeholder="Пароль" name="password" type="password" onChange={event => this.onChanged(event)} />
+					<input tabIndex="2" className="form-control" placeholder="Пароль" name="deptPassword" type="password" onChange={this.onChanged} />
 				</div>
 				<div className="col-2">
-					<button tabIndex="3" className="btn btn-primary" onClick={() => this.props.createDept(this.state.dept)}>Сохранить</button>
+					<button tabIndex="3" className="btn btn-primary" onClick={this.onSave}>Сохранить</button>
 				</div>
 			</div>
 			) : (
-				<button className="btn btn-primary" onClick={() => this.addButtonToggle()}>Добавить новый</button>
+				<button className="btn btn-primary" onClick={this.addButtonToggle}>Добавить новый</button>
 			);
+
+		const error = this.state.error ? <div className="alert alert-warning" role="alert">{this.state.error}</div> : null;
 
 		return (
 			<div className='NewDepartment'>
 				{content}
+				{error}
 			</div>
 		);
 	}
